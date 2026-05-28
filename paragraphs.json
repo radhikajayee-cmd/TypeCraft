@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "difficulty": "easy",
+    "text": "The quick brown fox jumps over the lazy dog. This classic phrase contains every letter of the alphabet and is often used to test typewriters and computer keyboards. Typing it regularly can help beginners improve their typing flow."
+  },
+  {
+    "id": 2,
+    "difficulty": "easy",
+    "text": "Success is not final, failure is not fatal: it is the courage to continue that counts. We make a living by what we get, but we make a life by what we give. Believe you can and you are halfway there."
+  },
+  {
+    "id": 3,
+    "difficulty": "medium",
+    "text": "Python is a high-level, general-purpose programming language. Its design philosophy emphasizes code readability with the use of significant indentation. Python is dynamically-typed and garbage-collected, making it a favorite for web development, data science, and artificial intelligence."
+  },
+  {
+    "id": 4,
+    "difficulty": "medium",
+    "text": "Web development is the work involved in developing a website for the Internet or an Intranet. Web development can range from developing a simple single static page of plain text to complex web applications, electronic businesses, and social network services."
+  },
+  {
+    "id": 5,
+    "difficulty": "hard",
+    "text": "In the software engineering lifecycle, optimization is often deferred to prevent premature architectural complexity. As Donald Knuth famously stated, 'Premature optimization is the root of all evil.' Developers must balance clean, maintainable structures with high performance, employing unit testing and continuous integration to maintain stability."
+  },
+  {
+    "id": 6,
+    "difficulty": "hard",
+    "text": "Asynchronous JavaScript and XML, commonly known as AJAX, revolutionized web design by allowing pages to update asynchronously. By exchanging small amounts of data with the server behind the scenes, web pages can update parts of a page without reloading the entire viewport, creating a smoother user experience."
+  }
+]

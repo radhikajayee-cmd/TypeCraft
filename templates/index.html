@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KeyPulse - Modern Typing Speed Analyzer</title>
+    
+    <!-- Meta tags for SEO -->
+    <meta name="description" content="Test and analyze your typing speed, accuracy, and performance with KeyPulse. A simple, modern web typing speed analyzer.">
+    <meta name="author" content="College Project Portfolio">
+    
+    <!-- Google Fonts for sleek typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="dark-theme">
+    <!-- Main Wrapper -->
+    <div class="app-container">
+        
+        <!-- Header Section -->
+        <header class="app-header">
+            <div class="logo">
+                <i class="fa-solid fa-keyboard logo-icon animate-pulse"></i>
+                <span class="logo-text">Key<span class="text-accent">Pulse</span></span>
+            </div>
+            
+            <div class="header-actions">
+                <!-- Theme Toggle Button -->
+                <button id="theme-toggle" class="btn-icon" aria-label="Toggle Theme">
+                    <i class="fa-solid fa-sun icon-sun"></i>
+                    <i class="fa-solid fa-moon icon-moon"></i>
+                </button>
+            </div>
+        </header>
+        
+        <!-- Main Content Area -->
+        <main class="main-content">
+            
+            <!-- Typing Test Panel -->
+            <section class="typing-card">
+                <!-- Test Configuration & Info -->
+                <div class="card-header">
+                    <div class="difficulty-selector">
+                        <span class="label">Difficulty:</span>
+                        <div class="pill-group">
+                            <button class="pill active" data-difficulty="easy">Easy</button>
+                            <button class="pill" data-difficulty="medium">Medium</button>
+                            <button class="pill" data-difficulty="hard">Hard</button>
+                        </div>
+                    </div>
+                    
+                    <div class="test-type">
+                        <span class="badge"><i class="fa-regular fa-clock"></i> 60 Seconds Test</span>
+                    </div>
+                </div>
+                
+                <!-- Live Statistics Board -->
+                <div class="stats-board">
+                    <div class="stat-box timer-box">
+                        <span class="stat-val" id="timer">60</span>
+                        <span class="stat-lbl">Seconds Left</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-val" id="wpm">0</span>
+                        <span class="stat-lbl">WPM</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-val" id="accuracy">100%</span>
+                        <span class="stat-lbl">Accuracy</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-val text-error" id="mistakes">0</span>
+                        <span class="stat-lbl">Mistakes</span>
+                    </div>
+                </div>
+                
+                <!-- Paragraph Display & Input Area -->
+                <div class="typing-area-wrapper" id="typing-area-container">
+                    <!-- Blur overlay to enforce typing focus -->
+                    <div class="focus-overlay" id="focus-overlay">
+                        <i class="fa-solid fa-keyboard overlay-icon animate-pulse"></i>
+                        <p>Click anywhere on the typing card or press any key to focus and start typing</p>
+                    </div>
+                    
+                    <!-- Paragraph character container -->
+                    <div class="text-display" id="text-display">
+                        <!-- Spans of characters will be dynamically loaded here by script.js -->
+                        <div class="spinner-container">
+                            <i class="fa-solid fa-circle-notch fa-spin spinner"></i>
+                            <p>Loading paragraph...</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Invisible input field to capture user typing events (focusable) -->
+                    <input type="text" class="hidden-input" id="input-field" autocomplete="off" autocapitalize="off" spellcheck="false">
+                </div>
+                
+                <!-- Controls & Tip Footer -->
+                <div class="card-footer">
+                    <div class="keyboard-tip">
+                        <i class="fa-solid fa-lightbulb icon-tip"></i>
+                        <span>Start typing! The timer will start automatically.</span>
+                    </div>
+                    <button class="btn btn-primary" id="btn-restart">
+                        <i class="fa-solid fa-rotate-right"></i> Restart Test
+                    </button>
+                </div>
+            </section>
+            
+            <!-- Leaderboard / Recent Scores -->
+            <section class="leaderboard-section">
+                <div class="section-header">
+                    <h2><i class="fa-solid fa-trophy text-gold"></i> Top Typists</h2>
+                    <p>Recent high scores from the community</p>
+                </div>
+                <div class="leaderboard-table-wrapper">
+                    <table class="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Name</th>
+                                <th>Speed (WPM)</th>
+                                <th>Accuracy</th>
+                                <th>Mistakes</th>
+                                <th>Difficulty</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboard-body">
+                            <!-- Leaderboard records will be loaded dynamically -->
+                            <tr>
+                                <td colspan="6" class="text-center py-4">
+                                    <i class="fa-solid fa-circle-notch fa-spin"></i> Loading rankings...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+        </main>
+        
+        <!-- Results Modal overlay -->
+        <div class="modal-backdrop" id="results-modal">
+            <div class="modal-card">
+                <div class="modal-header">
+                    <i class="fa-solid fa-circle-check success-icon"></i>
+                    <h2>Test Completed!</h2>
+                    <p>Here is your performance breakdown:</p>
+                </div>
+                
+                <!-- Summary Stats Grid -->
+                <div class="modal-stats-grid">
+                    <div class="modal-stat-card">
+                        <span class="val text-accent" id="modal-wpm">0</span>
+                        <span class="lbl">Words Per Minute</span>
+                    </div>
+                    <div class="modal-stat-card">
+                        <span class="val" id="modal-accuracy">0%</span>
+                        <span class="lbl">Accuracy</span>
+                    </div>
+                    <div class="modal-stat-card">
+                        <span class="val text-error" id="modal-mistakes">0</span>
+                        <span class="lbl">Typing Mistakes</span>
+                    </div>
+                    <div class="modal-stat-card">
+                        <span class="val text-gold" id="modal-rating">Bronze</span>
+                        <span class="lbl">Speed Rating</span>
+                    </div>
+                </div>
+                
+                <!-- Leaderboard Save score form -->
+                <div class="submit-score-section">
+                    <h3>Save your score to the leaderboard</h3>
+                    <form id="score-submit-form" class="score-form">
+                        <div class="input-group">
+                            <input type="text" id="username-input" placeholder="Enter your name (e.g. Typist)" required maxlength="15">
+                            <button type="submit" class="btn btn-accent" id="btn-submit-score">
+                                <i class="fa-solid fa-cloud-arrow-up"></i> Submit
+                            </button>
+                        </div>
+                        <div id="submit-feedback" class="submit-feedback"></div>
+                    </form>
+                </div>
+                
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" id="btn-modal-close">Close</button>
+                    <button class="btn btn-primary" id="btn-modal-restart"><i class="fa-solid fa-rotate-right"></i> Try Again</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>&copy; 2026 KeyPulse Speed Analyzer. Made with Flask & Vanilla Web Technologies.</p>
+        </footer>
+    </div>
+</body>
+    <!-- Application Script -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</html>
