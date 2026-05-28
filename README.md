@@ -1,5 +1,29 @@
 # KeyPulse: Modern Typing Speed Analyzer
 
+# Project Name
+
+Short description about your project.
+
+## 🚀 Live Demo
+🔗 https://type-craft-chi.vercel.app/ 
+
+## 📌 Features
+- ![Typing Test](image.png)
+- ![Typing Test 2](image-1.png)
+-
+
+## 🛠️ Technologies Used
+- HTML
+- CSS
+- JavaScript
+- React / Django / Node.js
+
+## 📂 Installation
+
+```bash
+git clone https://github.com/your-username/your-repo-name.git
+cd your-repo-name
+
 **KeyPulse** is a lightweight, modern web-based typing speed and accuracy analyzer. Developed using **Python Flask** for the backend and **semantic HTML5, Vanilla CSS3, and JavaScript (ES6)** for the frontend, it provides an aesthetic, game-like experience similar to Monkeytype or 10FastFingers. 
 
 The application is structured to show clean development patterns, making it an excellent addition to a **GitHub portfolio** or as a **college project** that stands out in interviews and vivas.
